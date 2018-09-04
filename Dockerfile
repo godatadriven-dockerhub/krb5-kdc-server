@@ -30,13 +30,14 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     python-setuptools \
     python-pkg-resources \
     krb5-admin-server \
-    krb5-kdc
+    krb5-kdc \
+ && rm -rf /var/lib/apt/lists/* \
+ && mkdir -p /var/log/supervisord/
 
 RUN mkdir /app/
 
 # Supervisord
 RUN pip install supervisor==3.3.4
-RUN mkdir -p /var/log/supervisord/
 
 COPY ./krb-conf/server/kdc.conf /etc/krb5kdc/kdc.conf
 COPY ./krb-conf/server/kadm5.acl /etc/krb5kdc/kadm5.acl
